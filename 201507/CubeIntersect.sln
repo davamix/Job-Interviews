@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.22823.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CubeIntersect", "CubeIntersect\CubeIntersect.csproj", "{CF2281F7-6ADA-4CFD-BB1B-9AD749DADFAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CubeIntersect.Test", "CubeIntersect.Test\CubeIntersect.Test.csproj", "{B36C0E07-AC56-4815-A026-EC8A8485DE92}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CF2281F7-6ADA-4CFD-BB1B-9AD749DADFAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF2281F7-6ADA-4CFD-BB1B-9AD749DADFAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF2281F7-6ADA-4CFD-BB1B-9AD749DADFAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF2281F7-6ADA-4CFD-BB1B-9AD749DADFAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B36C0E07-AC56-4815-A026-EC8A8485DE92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B36C0E07-AC56-4815-A026-EC8A8485DE92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B36C0E07-AC56-4815-A026-EC8A8485DE92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B36C0E07-AC56-4815-A026-EC8A8485DE92}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
