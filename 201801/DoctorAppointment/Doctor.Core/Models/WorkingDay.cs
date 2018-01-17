@@ -7,24 +7,12 @@ using Newtonsoft.Json;
 
 namespace Doctor.Core.Models
 {
-	internal class Session
-	{
-		public TimeSpan Start { get; set; }
-		public TimeSpan End { get; set; }
-
-		public bool IsWorkable()
-		{
-			return Start > TimeSpan.MinValue && End > TimeSpan.MinValue;
-		}
-	}
-
 	public class WorkingDay
 	{
 		public WorkPeriod WorkPeriod { get; set; }
 		public List<BusySlot> BusySlots { get; set; }
 		public string DayName { get; set; }
-
-
+		
 		[JsonProperty]
 		private int StartHour
 		{
@@ -59,13 +47,7 @@ namespace Doctor.Core.Models
 			BusySlots = new List<BusySlot>();
 			DayName = dayName;
 		}
-
-		public bool IsWorkigDay()
-		{
-			return (WorkPeriod.StartHour > 0 && WorkPeriod.EndHour > 0) ||
-				   (WorkPeriod.LunchStartHour > 0 && WorkPeriod.LunchEndHour > 0);
-		}
-
+		
 		public List<TimeSpan> SplitInTimeSpan(int slotDuration)
 		{
 			var slots = new List<TimeSpan>();

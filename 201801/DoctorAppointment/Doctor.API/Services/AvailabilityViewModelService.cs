@@ -43,7 +43,7 @@ namespace Doctor.API.Services
 
 			foreach (var wd in availability.WorkingsDays)
 			{
-				if (wd.IsWorkigDay())
+				if (wd.WorkPeriod.IsWorkable())
 				{
 					var day = new Tuple<string, List<TimeSpan>>(wd.DayName, wd.SplitInTimeSpan(availability.SlotDurationMinutes));
 					response.Slots.Add(day);
