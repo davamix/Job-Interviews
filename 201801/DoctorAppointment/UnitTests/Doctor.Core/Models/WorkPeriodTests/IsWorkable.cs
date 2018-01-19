@@ -9,7 +9,7 @@ namespace UnitTests.Doctor.Core.Models.WorkPeriodTests
 	public class IsWorkable
 	{
 		[Fact]
-		public void NonHoursStablishedIsNotWorkable()
+		public void Non_Hours_Stablished_Is_Not_Workable()
 		{
 			var wp = new WorkPeriod();
 
@@ -17,7 +17,7 @@ namespace UnitTests.Doctor.Core.Models.WorkPeriodTests
 		}
 
 		[Fact]
-		public void StartHourGreaterThanZeroIsWorkable()
+		public void StartHour_Greater_Than_Zero_Is_Workable()
 		{
 			var wp = new WorkPeriod { StartHour = 1 };
 
@@ -25,7 +25,7 @@ namespace UnitTests.Doctor.Core.Models.WorkPeriodTests
 		}
 
 		[Fact]
-		public void EndHourGreaterThanZeroIsWorkable()
+		public void EndHour_Greater_Than_Zero_Is_Workable()
 		{
 			var wp = new WorkPeriod { EndHour = 1 };
 

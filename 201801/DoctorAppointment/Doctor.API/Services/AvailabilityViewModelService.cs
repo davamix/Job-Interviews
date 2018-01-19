@@ -43,11 +43,19 @@ namespace Doctor.API.Services
 
 			foreach (var wd in availability.WorkingsDays)
 			{
-				if (wd.WorkPeriod.IsWorkable())
+				//option 1
+				var slots = wd.SplitInSlots(availability.SlotDurationMinutes);
+				if (slots.Any())
 				{
-					var day = new Tuple<string, List<TimeSpan>>(wd.DayName, wd.SplitInTimeSpan(availability.SlotDurationMinutes));
-					response.Slots.Add(day);
+					response.Slots.Add(new Tuple<string, List<TimeSpan>>(wd.DayName, slots.ToList()));
 				}
+					
+				//// option 2
+				//if (wd.WorkPeriod.IsWorkable())
+				//{
+				//	var day = new Tuple<string, List<TimeSpan>>(wd.DayName, wd.SplitInTimeSpan(availability.SlotDurationMinutes));
+				//	response.Slots.Add(day);
+				//}
 			}
 
 			return response;

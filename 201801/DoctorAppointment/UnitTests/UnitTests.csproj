@@ -17,8 +17,4 @@
     <ProjectReference Include="..\Doctor.Core\Doctor.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Doctor.Core\Models\WorkingDayTests\" />
-  </ItemGroup>
-
 </Project>

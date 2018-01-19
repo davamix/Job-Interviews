@@ -12,7 +12,7 @@ namespace Doctor.Core.Models
 		public WorkPeriod WorkPeriod { get; set; }
 		public List<BusySlot> BusySlots { get; set; }
 		public string DayName { get; set; }
-		
+
 		[JsonProperty]
 		private int StartHour
 		{
@@ -47,90 +47,46 @@ namespace Doctor.Core.Models
 			BusySlots = new List<BusySlot>();
 			DayName = dayName;
 		}
-		
-		public List<TimeSpan> SplitInTimeSpan(int slotDuration)
+
+		public IEnumerable<TimeSpan> SplitInSlots(int slotDuration)
 		{
-			var slots = new List<TimeSpan>();
-			var (morning, afternoon) = GetSessions();
-
-			if (morning.IsWorkable())
-				slots.AddRange(Split(morning, slotDuration));
-
-			if (afternoon.IsWorkable())
-				slots.AddRange(Split(afternoon, slotDuration));
+			if (!WorkPeriod.IsWorkable()) return Enumerable.Empty<TimeSpan>();
+			
+			var slots = WorkPeriod.SplitInSlots(slotDuration);
 
 			if (BusySlots.Any())
-				slots = RemoveBusySlots(slots);
-
-			return slots;
-		}
-
-		private (Session morning, Session afternoon) GetSessions()
-		{
-			var morning = new Session();
-			var afternoon = new Session();
-
-			// Split shift
-			if (StartHour < LunchStartHour && EndHour > LunchEndHour)
-			{
-				morning.Start = new TimeSpan(StartHour, 0, 0);
-				morning.End = new TimeSpan(LunchStartHour, 0, 0);
-				afternoon.Start = new TimeSpan(LunchEndHour, 0, 0);
-				afternoon.End = new TimeSpan(EndHour, 0, 0);
-			}
-
-			// Only morning
-			if (EndHour < LunchStartHour)
-			{
-				morning.Start = new TimeSpan(StartHour, 0, 0);
-				morning.End = new TimeSpan(EndHour, 0, 0);
-			}
-
-			// Only Afternoon
-			if (StartHour > LunchEndHour)
-			{
-				afternoon.Start = new TimeSpan(StartHour, 0, 0);
-				afternoon.End = new TimeSpan(EndHour, 0, 0);
-			}
-
-			return (morning, afternoon);
-		}
-
-		private List<TimeSpan> Split(Session session, int slotDuration)
-		{
-			var slots = new List<TimeSpan>();
-			var workingMinutes = (session.End - session.Start).TotalMinutes;
-
-			var startSlot = session.Start;
-
-			for (var x = 0; x < workingMinutes; x += slotDuration)
-			{
-				var newSlot = new TimeSpan(0, x, 0);
-				slots.Add(startSlot.Add(newSlot));
-			}
+				return RemoveBusySlots(slots);
 
 			return slots;
 		}
 
 		private List<TimeSpan> RemoveBusySlots(IList<TimeSpan> slots)
 		{
-			var busyIntervals = BusySlots.Select(x => new Tuple<TimeSpan, TimeSpan>(new TimeSpan(x.Start.Hour, x.Start.Minute, x.Start.Second),
-																					new TimeSpan(x.End.Hour, x.End.Minute, x.End.Second))).ToList();
-
 			var slotsToRemove = new List<TimeSpan>();
 
+			// Convert List<BusySlot> (DateTime values) to List<Interval> (TimeSpan values)
+			var busyIntervals = BusySlots.Select(x => new Interval
+			                                           {
+				                                           Start = new TimeSpan(x.Start.Hour, x.Start.Minute, x.Start.Second),
+				                                           End = new TimeSpan(x.End.Hour, x.End.Minute, x.End.Second)
+			                                           });
+			
+			// Compared the slots list with the busy slots list.
+			// Overlapped slots are added to the list of slots to be removed
 			Parallel.ForEach(slots, x =>
-			{
-				if (IsOverlap(x, busyIntervals))
-					slotsToRemove.Add(x);
-			});
+			                        {
+				                        if (IsOverlap(x, busyIntervals))
+					                        slotsToRemove.Add(x);
+			                        });
 
+			// Return a new list of slots without the busy slots.
 			return slots.Except(slotsToRemove).ToList();
 		}
 
-		private bool IsOverlap(TimeSpan slot, IEnumerable<Tuple<TimeSpan, TimeSpan>> intervals)
+		private bool IsOverlap(TimeSpan slot, IEnumerable<Interval> intervals)
 		{
-			return intervals.Any(x => slot >= x.Item1 && slot < x.Item2);
+			return intervals.Any(x => slot >= x.Start && slot < x.End);
 		}
+		
 	}
 }
