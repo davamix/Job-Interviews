@@ -32,8 +32,10 @@ namespace Doctor.Core.Services
 
 			var responseData = await _apiClient.GetStringAsync(getAvailabilityUrl);
 
-			var response = JsonConvert.DeserializeObject<Availability>(responseData);
+			var response = JsonConvert.DeserializeObject<Availability>(responseData, new JsonSerializerSettings{});
 
+			// Check if response is null. 
+			// Return null or and empty object? Error object?
 
 			return response;
 		}
