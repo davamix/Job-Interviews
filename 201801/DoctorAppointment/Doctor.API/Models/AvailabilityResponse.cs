@@ -7,6 +7,7 @@ namespace Doctor.API.Models
 {
 	public class AvailabilityResponse
 	{
+		public string ErrorMessage { get; set; }
 		public List<Tuple<string, List<TimeSpan>>> Slots { get; set; }
 
 		public AvailabilityResponse()

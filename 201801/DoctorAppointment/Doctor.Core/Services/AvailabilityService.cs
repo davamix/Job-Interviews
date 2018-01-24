@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Doctor.Core.DTOs;
 using Doctor.Core.Models;
 using Doctor.Core.Network;
+using Doctor.Core.Types;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
@@ -24,19 +25,17 @@ namespace Doctor.Core.Services
 			_remoteBaseUrl = _settings.Value.AvailabilityUrl;
 		}
 
-
-		public async Task<Availability> GetAvailability(DateTime date)
+		public async Task<Either<string, Availability>> GetAvailability(DateTime date)
 		{
 			string validDate = date.ToString("yyyyMMdd");
 			var getAvailabilityUrl = _remoteBaseUrl + $"/api/availability/GetAvailability/{validDate}";
 
 			var responseData = await _apiClient.GetStringAsync(getAvailabilityUrl);
 
-			var response = JsonConvert.DeserializeObject<Availability>(responseData, new JsonSerializerSettings{});
+			if (string.IsNullOrEmpty(responseData))
+				return "No data available";
 
-			// Check if response is null. 
-			// Return null or and empty object? Error object?
-
+			var response = JsonConvert.DeserializeObject<Availability>(responseData);
 			return response;
 		}
 

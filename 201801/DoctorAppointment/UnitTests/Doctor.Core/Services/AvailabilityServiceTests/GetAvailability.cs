@@ -52,13 +52,16 @@ namespace UnitTests.Doctor.Core.Services.AvailabilityServiceTests
 		}
 
 	    [Fact]
-	    public async void A_Empty_Response_Create_An_Empty_Availabiltiy_Object()
+	    public async void A_Empty_Response_Returns_No_Data_Available_Message()
 	    {
-		    var service = new AvailabilityService(_client, _options);
+		    string errorMsg = String.Empty;
 
-		    var result = await service.GetAvailability(DateTime.UtcNow);
+			var service = new AvailabilityService(_client, _options);
 
-			Assert.IsType<Availability>(result);
-	    }
+			var result = await service.GetAvailability(DateTime.UtcNow);
+		    result.Match((left) => errorMsg = left, null);
+
+			Assert.Equal("No data available", errorMsg);
+		}
     }
 }

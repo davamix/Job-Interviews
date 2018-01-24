@@ -25,9 +25,14 @@ namespace Doctor.API.Services
 		{
 			var availability = await _service.GetAvailability(date);
 
-			var response = GetAvailableSlots(availability);
+			return availability.Match(
+			                          (left) => new AvailabilityResponse {ErrorMessage = left},
+			                          (right) => GetAvailableSlots(right)
+			                         );
 
-			return response;
+			//var response = GetAvailableSlots(availability);
+
+			//return response;
 		}
 
 		public Task TakeSlot(SlotRequest slot)
