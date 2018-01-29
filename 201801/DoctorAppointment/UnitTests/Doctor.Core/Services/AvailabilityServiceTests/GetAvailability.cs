@@ -12,12 +12,33 @@ using Xunit;
 
 namespace UnitTests.Doctor.Core.Services.AvailabilityServiceTests
 {
-	public class HttpClientMock :IHttpClient
+	public interface IResponseMock
 	{
+		string Response { get; }
+	}
+	public class ResponseEmpty : IResponseMock
+	{
+		public string Response => string.Empty;
+	}
+
+	public class ResponseAvailability : IResponseMock
+	{
+		public string Response => "{\"Facility\": {\"FacilityId\": \"eff24e99-ceb1-49d8-b5f5-ce6b6483e8ed\",\"Name\": \"Las Palmeras\",\"Address\": \"Plaza de la independencia 36, 38006 Santa Cruz de Tenerife\"}}";
+	}
+
+	public class HttpClientMock : IHttpClient
+	{
+		private readonly IResponseMock _response;
+
+		public HttpClientMock(IResponseMock response)
+		{
+			_response = response;
+		}
+
 		public async Task<string> GetStringAsync(string uri)
 		{
-			var result = await Task.FromResult("");
-			
+			var result = await Task.FromResult(_response.Response);
+
 			return result;
 		}
 
@@ -46,22 +67,37 @@ namespace UnitTests.Doctor.Core.Services.AvailabilityServiceTests
 
 		public GetAvailability()
 		{
-			_client =  new HttpClientMock();
 			_options = new OptionsMock();
-			
+
 		}
 
-	    [Fact]
-	    public async void A_Empty_Response_Returns_No_Data_Available_Message()
-	    {
-		    string errorMsg = String.Empty;
+		[Fact]
+		public async void A_Empty_Response_Returns_No_Data_Available_Message()
+		{
+			var response = new ResponseEmpty();
+			var client = new HttpClientMock(response);
+			var resultMsg = string.Empty; // To save the error message from service call
 
-			var service = new AvailabilityService(_client, _options);
+			var service = new AvailabilityService(client, _options);
 
-			var result = await service.GetAvailability(DateTime.UtcNow);
-		    result.Match((left) => errorMsg = left, null);
+			var resultService = await service.GetAvailability(DateTime.UtcNow);
+			resultService.Match((left) => resultMsg = left, null);
 
-			Assert.Equal("No data available", errorMsg);
+			Assert.Equal("No data available", resultMsg);
 		}
-    }
+
+		[Fact]
+		public async void Availability_Response()
+		{
+			var response = new ResponseAvailability();
+			var client = new HttpClientMock(response);
+			var resultAvailabilty = new Availability();
+			var service = new AvailabilityService(client, _options);
+
+			var resultService = await service.GetAvailability(DateTime.UtcNow);
+			resultService.Match(null, (right) => resultAvailabilty);
+
+			Assert.NotNull(resultAvailabilty.Facility);
+		}
+	}
 }
