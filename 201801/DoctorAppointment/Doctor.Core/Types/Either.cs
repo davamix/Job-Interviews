@@ -6,6 +6,10 @@ namespace Doctor.Core.Types
 {
 	/// <summary>
 	/// Class to wrap the response from a function
+	/// 
+	/// 
+	/// Code from Functional Programming in C#
+	/// https://github.com/la-yumba/functional-csharp-code
 	/// </summary>
 	/// <typeparam name="L">Wraps the value of type L, capturing de details about the error</typeparam>
 	/// <typeparam name="R">Wraps the value of type R, representing the successful result</typeparam>
@@ -36,4 +40,6 @@ namespace Doctor.Core.Types
 
 	    public TR Match<TR>(Func<L, TR> Left, Func<R, TR> Right) => _isLeft ? Left(this.Left) : Right(this.Right);
     }
+
+	
 }

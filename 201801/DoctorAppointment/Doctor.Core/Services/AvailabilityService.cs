@@ -39,13 +39,18 @@ namespace Doctor.Core.Services
 			return response;
 		}
 
-		public async Task TakeSlot(SlotDto slot)
+		public async Task<Optional<string>> TakeSlot(SlotDto slot)
 		{
 			var postAvailiabiltyUrl = _remoteBaseUrl + "/api/availability/TakeSlot";
 
 			var response = await _apiClient.PostAsync(postAvailiabiltyUrl, slot);
 
-			response.EnsureSuccessStatusCode();
+
+			if (!response.IsSuccessStatusCode)
+				return Optional<string>.Some("Error");
+
+
+			return Optional<string>.None;
 		}
 	}
 }

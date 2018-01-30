@@ -12,6 +12,7 @@ namespace Doctor.Core.Services
 	{
 		Task<Either<string, Availability>> GetAvailability(DateTime date);
 
-		Task TakeSlot(SlotDto slot);
+		//Task TakeSlot(SlotDto slot);
+		Task<Optional<string>> TakeSlot(SlotDto slot);
 	}
 }
