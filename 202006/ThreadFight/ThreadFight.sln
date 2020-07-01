@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30128.74
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainApp", "MainApp\MainApp.csproj", "{7C64FDE2-1CBE-4F35-AC79-2BA2B74FDEDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainApp.Tests", "MainApp.Tests\MainApp.Tests.csproj", "{BDF38A0C-0A59-4032-A8A7-4C78ADE5FCA1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainApp.Core.Tests", "MainApp.Core.Tests\MainApp.Core.Tests.csproj", "{BDF38A0C-0A59-4032-A8A7-4C78ADE5FCA1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainApp.Core", "MainApp.Core\MainApp.Core.csproj", "{FE5CD946-9EE4-433F-8B8C-0F7C241C772A}"
 EndProject
