@@ -46,8 +46,11 @@ namespace MainApp.Core
 
         public void Enqueue(string item)
         {
-            _items.Add(item);
-            RaiseOnItemEnqueued(EventArgs.Empty);
+            lock (_items)
+            {
+                _items.Add(item);
+                RaiseOnItemEnqueued(EventArgs.Empty);
+            }
         }
 
         protected virtual void RaiseOnItemEnqueued(EventArgs e)
