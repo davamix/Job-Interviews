@@ -8,7 +8,7 @@ namespace OrderService.Client.Services.Order
     public interface IOrderService
     {
         Task<IEnumerable<string>> GetOrderOptions();
-        IEnumerable<string> GetOrderedText(string text, string orderOption);
+        Task<IEnumerable<string>> GetOrderedText(Models.Order order, string orderOption);
         string GetStatistics(string test);
     }
 }

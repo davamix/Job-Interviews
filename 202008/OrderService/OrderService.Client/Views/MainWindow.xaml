@@ -1,14 +1,68 @@
 ﻿<Window x:Class="OrderService.Client.Views.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:prism="http://prismlibrary.com/"
-        prism:ViewModelLocator.AutoWireViewModel="True"
-        Title="{Binding Title}" Height="350" Width="525" >
-    <Grid>
-		<StackPanel>
-			<Button Content="Get Order options"
-					Command="{Binding GetOrderOptionsCommand}" />
-			<ListView ItemsSource="{Binding OrderOptions}" />
-		</StackPanel>
-    </Grid>
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:prism="http://prismlibrary.com/"
+		prism:ViewModelLocator.AutoWireViewModel="True"
+		xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+		TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+		Background="{DynamicResource MaterialDesignPaper}"
+		TextElement.FontWeight="Medium"
+		TextElement.FontSize="14"
+		FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+		Title="{Binding Title}"
+		Height="480"
+		Width="640">
+	<StackPanel>
+
+		<Button Command="{Binding GetOrderOptionsCommand}"
+				MinWidth="64"
+				MaxWidth="192"
+				Margin="10, 5, 10, 0"
+				Style="{StaticResource MaterialDesignRaisedLightButton}"
+				Height="50"
+				materialDesign:ButtonAssist.CornerRadius="5">
+			<TextBlock Text="Get Order options" />
+		</Button>
+		<ListView  x:Name="lstOptions"
+				   ItemsSource="{Binding OrderOptions}"
+				   MinHeight="72"
+				   MaxHeight="72"
+				   Margin="10, 5, 10, 0" />
+		<Border Margin="0 24 0 0"
+				BorderThickness="0 1 0 0"
+				BorderBrush="{DynamicResource MaterialDesignDivider}" />
+
+		<TextBlock Text="Order content"
+				   Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+				   Margin="10, 5, 10, 0" />
+
+		<TextBox  Text="{Binding Order.Content}"
+				  materialDesign:HintAssist.Hint="Enter order text"
+				  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+				  TextWrapping="Wrap"
+				  AcceptsReturn="True"
+				  VerticalScrollBarVisibility="Auto"
+				  MinHeight="72"
+				  MaxHeight="72"
+				  Margin="10, 5, 10, 0" />
+		<Button 
+				Command="{Binding ProcessOrderCommand}"
+				CommandParameter="{Binding ElementName=lstOptions, Path=SelectedItem}"
+				MinWidth="64"
+				Margin="10, 5, 10, 0"
+				Style="{StaticResource MaterialDesignRaisedLightButton}"
+				Height="50"
+				materialDesign:ButtonAssist.CornerRadius="5">
+			<TextBlock Text="Process order" />
+		</Button>
+		<ListView  x:Name="lstResults"
+				   ItemsSource="{Binding OrderResults}"
+				   MinHeight="72"
+				   MaxHeight="72"
+				   Margin="10, 5, 10, 0" />
+		<Border Margin="0 24 0 0"
+				BorderThickness="0 1 0 0"
+				BorderBrush="{DynamicResource MaterialDesignDivider}" />
+
+	</StackPanel>
 </Window>

@@ -3,6 +3,7 @@ using OrderService.Client.Views;
 using System.Windows;
 using OrderService.Client.Services.Order;
 using OrderService.Client.Services.Request;
+using System.ComponentModel.DataAnnotations;
 
 namespace OrderService.Client
 {
