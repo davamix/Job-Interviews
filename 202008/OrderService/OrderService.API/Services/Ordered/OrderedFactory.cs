@@ -20,16 +20,5 @@ namespace OrderService.API.Services.Ordered
 
         public IOrderedType GetOrdered(OrderType orderType) => _orderTypes[orderType];
 
-        //public IOrderedType GetOrdered(OrderType orderType)
-        //{
-        //    return orderType switch
-        //    {
-        //        OrderType.AlphabeticAsc => new OrderedAsc(),
-        //        OrderType.AlphabeticDesc => new OrderedDesc(),
-        //        OrderType.LengthAsc => new OrderedLength(),
-        //        _ => throw new InvalidEnumArgumentException(),
-        //    };
-        //}
-
     }
 }
