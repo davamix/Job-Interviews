@@ -17,7 +17,7 @@ namespace OrderService.Client.Services.Order
     {
         private readonly IRequestService _requestService;
         private readonly string _base_url = "https://localhost:44387/api/order";
-        private readonly string _get_ordered_text_url = "https://localhost:44387/api/order/GetOrderedText";
+        private readonly string _get_ordered_text_url = "https://localhost:44387/api/order/GetOrderedText?orderOption={0}";
 
         public OrderService(IRequestService requestService)
         {
@@ -26,10 +26,12 @@ namespace OrderService.Client.Services.Order
 
         public async Task<IEnumerable<string>> GetOrderedText(Models.Order order, string orderOption)
         {
+            var url = string.Format(_get_ordered_text_url, orderOption);
+
             var message = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri(_get_ordered_text_url),
+                RequestUri = new Uri(url),
                 Content = new StringContent(JsonConvert.SerializeObject(order), Encoding.UTF8, "application/json")
             };
 
