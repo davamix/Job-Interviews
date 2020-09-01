@@ -24,7 +24,7 @@ namespace OrderService.API.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "AlphabeticAsc", "AlphabeticDesc", "LenghtAsc" };
+            return new string[] { "AlphabeticAsc", "AlphabeticDesc", "LengthAsc" };
         }
 
         [Route("[action]")]
