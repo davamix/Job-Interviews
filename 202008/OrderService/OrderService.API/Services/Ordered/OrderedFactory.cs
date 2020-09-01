@@ -8,20 +8,28 @@ namespace OrderService.API.Services.Ordered
 {
     public class OrderedFactory : IOrderedFactory
     {
-        public IOrderedType GetOrdered(OrderType orderType)
+        private readonly Dictionary<OrderType, IOrderedType> _orderTypes;
+        public OrderedFactory()
         {
-            switch (orderType)
-            {
-                case OrderType.AlphabeticAsc:
-                    return new OrderedAsc();
-                case OrderType.AlphabeticDesc:
-                    return new OrderedDesc();
-                case OrderType.LengthAsc:
-                    return new OrderedLength();
-
-                default:
-                    throw new InvalidEnumArgumentException();
-            }
+            _orderTypes = new Dictionary<OrderType, IOrderedType>() {
+                { OrderType.AlphabeticAsc, new OrderedAsc() },
+                { OrderType.AlphabeticDesc, new OrderedDesc() },
+                { OrderType.LengthAsc, new OrderedLength() }
+            };
         }
+
+        public IOrderedType GetOrdered(OrderType orderType) => _orderTypes[orderType];
+
+        //public IOrderedType GetOrdered(OrderType orderType)
+        //{
+        //    return orderType switch
+        //    {
+        //        OrderType.AlphabeticAsc => new OrderedAsc(),
+        //        OrderType.AlphabeticDesc => new OrderedDesc(),
+        //        OrderType.LengthAsc => new OrderedLength(),
+        //        _ => throw new InvalidEnumArgumentException(),
+        //    };
+        //}
+
     }
 }
