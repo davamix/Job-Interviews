@@ -1,0 +1,14 @@
+﻿<Window x:Class="OrderService.Client.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+        Title="{Binding Title}" Height="350" Width="525" >
+    <Grid>
+		<StackPanel>
+			<Button Content="Get Order options"
+					Command="{Binding GetOrderOptionsCommand}" />
+			<ListView ItemsSource="{Binding OrderOptions}" />
+		</StackPanel>
+    </Grid>
+</Window>
