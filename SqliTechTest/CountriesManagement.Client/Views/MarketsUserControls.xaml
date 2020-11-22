@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="CountriesManagement.Client.Views.MarketsUserControls"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:prism="http://prismlibrary.com/"
+			 prism:ViewModelLocator.AutoWireViewModel="True">
+	<Grid>
+		<ListView x:Name="lstMarkets"
+				  ItemsSource="{Binding Markets}">
+			<ListView.ItemTemplate>
+				<DataTemplate>
+					<StackPanel Orientation="Horizontal">
+						<CheckBox IsChecked="True" />
+						<TextBlock Text="{Binding Code}" />
+					</StackPanel>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
+
+	</Grid>
+</UserControl>
